@@ -2,7 +2,7 @@
   "version": 2,
   "functions": {
     "api/**/*.[jt]s": {
-      "runtime": "vercel-deno@3.1.0",
+      "runtime": "@lowlighter/vercel-deno@2.9.2",
       "maxDuration": 10
     }
   },
