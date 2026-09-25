@@ -1,0 +1,39 @@
+name: Generate Trophy SVG
+
+on:
+  schedule:
+    - cron: "0 */12 * * *"
+  workflow_dispatch:
+  push:
+    branches: [ master ]
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v2.x
+
+      - name: Generate trophy SVG
+        env:
+          GITHUB_TOKEN1: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN2: ${{ secrets.GITHUB_TOKEN }}
+          PROFILE_USERNAME: muhammadtaimoorajmal
+        run: |
+          mkdir -p output
+          deno run --allow-net --allow-env --allow-read --allow-write ./render_svg.ts muhammadtaimoorajmal output/trophy.svg onedark
+
+      - name: Push SVG to output branch
+        uses: crazy-max/ghaction-github-pages@v4
+        with:
+          target_branch: trophy-output
+          build_dir: output
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
