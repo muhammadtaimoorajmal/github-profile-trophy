@@ -1,5 +1,3 @@
-import "https://deno.land/x/dotenv@v0.5.0/load.ts";
-
 const username = Deno.args[0];
 const outputPath = Deno.args[1] ?? "./assets/trophy.svg";
 const themeName = Deno.args[2] ?? "default";
